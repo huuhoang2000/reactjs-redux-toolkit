@@ -1,0 +1,12 @@
+Here’s the data flow of your program:
+
+1. When your app starts, it dispatches the fetchPosts action in the useEffect hook.
+2. The fetchPosts action is an async thunk that makes a GET request to ‘https://jsonplaceholder.typicode.com/posts’ using axios.
+3. While the request is pending, redux toolkit automatically dispatches a fetchPosts.pending action, which sets state.loading to ‘loading’.
+4. If the request is successful, redux toolkit automatically dispatches a fetchPosts.fulfilled action with the response data as the payload. This sets state.loading to ‘succeeded’ and replaces state.entities with the response data.
+5. If the request fails, redux toolkit automatically dispatches a fetchPosts.rejected action with the error as the payload. This sets state.loading to ‘failed’ and replaces state.entities with the error message.
+6. The fetched posts are then displayed in your app. If state.loading is ‘loading’, it shows a loading message. Otherwise, it maps over state.entities (which should be an array of posts) and displays each post.
+7. When you click the “Create Post” button, it dispatches the createPosts action with a new post as the argument.
+8. The createPosts action is another async thunk that makes a POST request to ‘https://jsonplaceholder.typicode.com/posts’ with the new post as the body.
+9. If this request is successful, redux toolkit automatically dispatches a createPosts.fulfilled action with the response data as the payload. This replaces state.entities with the response data (which is just the new post).
+10. The new post then replaces all existing posts in your app.
